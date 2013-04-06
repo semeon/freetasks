@@ -1,0 +1,31 @@
+/*
+
+.taskRow {
+	border: 0px solid gray;
+	background-color: #ccc;
+	height: 30px;
+}
+
+
+.taskRow div {
+	margin-top: 2px;
+}
+
+
+.taskName {
+	margin-left: 10px;
+	line-height: 26px;
+}
+
+.taskViewControls {
+	margin-right: 10px;
+}*/
+
+
+.no-margin {
+	margin: 0px;
+}
+
+hr {
+	margin-top: 0px;
+}

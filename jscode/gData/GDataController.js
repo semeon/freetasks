@@ -8,7 +8,7 @@ function GDataController() {
   }
 
   this.requestProjectsJson = function(callback) {
-    alert('Requesting projects JSON..');
+    // alert('Requesting projects JSON..');
 
     var requestUri = "https://www.googleapis.com/tasks/v1/users/@me/lists?callback=?";
     var requestParams = 'access_token=' + self.token;

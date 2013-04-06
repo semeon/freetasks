@@ -19,7 +19,7 @@ function AuthModel() {
   
   // redirect_uri (required)
   // The URL on your site that will handle OAuth responses after the user takes an action on the dialog. You'll need to register the redirect_uri you'd like to use in advance. See the Registering your app with Google section for details on how to register.
-  this.redirectUri = "http://www.myhost.com/index.html";
+  this.redirectUri = "http://freetasks.appcloudy.com/index.html";
 
   // scope (required)
   // URL identifying the Google service to be accessed. See the documentation for the API you'd like to use for what scope to specify. To specify more than one scope, list each one separated with a space.

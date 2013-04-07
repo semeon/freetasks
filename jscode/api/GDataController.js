@@ -1,11 +1,8 @@
-function GDataController() {
+function GDataController(token) {
 
   var self = this;
-  this.token = '';
+  this.token = token;
 
-	this.init = function(token) {
-    self.token = token;
-  }
 
   this.requestProjectsJson = function(callback) {
     // alert('Requesting projects JSON..');

@@ -1,42 +1,37 @@
-function AuthController() {
+function AuthController(settings) {
   // alert('AuthController started');
   
   var self = this;
-  var authModel = new AuthModel();
-  var authView = new AuthView(authModel);
-  
+  var authView = new AuthView();
+
+  this.isLoggedIn = false;
+  // TODO   this.isAccessDenied = false;
+
+  if (settings.accessToken) {
+    self.isLoggedIn = true;
+  }
+
   this.login = function() {
-    var requestUri = "";
-    requestUri = requestUri + authModel.requestUriBase + "?";
-    requestUri = requestUri + "client_id=" + authModel.clientId;
-    requestUri = requestUri + "&redirect_uri=" + authModel.redirectUri;
-    requestUri = requestUri + "&scope=" + authModel.scope;
-    requestUri = requestUri + "&response_type=" + authModel.responseType;
-    // requestUri = requestUri + "&state=" + authModel.state;
-    // alert("requestUri: " + requestUri);
+    var requestUri = '';
+    requestUri = requestUri + settings.requestUriBase + '?';
+    requestUri = requestUri + 'client_id=' + settings.clientId + '&';
+    requestUri = requestUri + 'redirect_uri=' + settings.redirectUri + '&';
+    requestUri = requestUri + 'response_type=' + settings.responseType + '&';
+    requestUri = requestUri + 'scope=' + settings.scope + '&';
+    // requestUri = requestUri + '&state='' + authModel.state + '&';
+
+    // alert(settings.redirectUri);
+
     window.location.href = requestUri;
   }
 
   this.logout = function() {
     // TODO
-    window.location.href = authModel.redirectUri;
-  }
-  
-  this.getAccessToken = function() {
-    return authModel.accessToken;
-  }
-
-  this.isLoggedIn = function() {
-    // alert('authModel.loggedIn ' + authModel.loggedIn);
-    return authModel.loggedIn;
-  }
-
-  this.isAccessDenied = function() {
-    return authModel.accessDenied;
+    window.location.href = settings.redirectUri;
   }
   
   this.displayLoginStatus = function () {
-    authView.displayLoginStatusMessage(self.isLoggedIn());
+    authView.displayLoginStatusMessage(self.isLoggedIn);
 
     // Bind events
     authView.loginButtonNavbar.bind('click', function() {

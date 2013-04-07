@@ -29,12 +29,10 @@ function TaskPaneView() {
     
     var content = createTaskGroupContent(project);
     rowDiv.append(content);
-
-
   }
 
   createTaskGroupContent = function(project) {
-    var containerDiv = $('<div class="span12 well well-small"></div>');
+    var containerDiv = $('<div class="span12 wellx well-small"></div>');
 
     var taskGroupHeader = createTaskGroupHeader(project);
     containerDiv.append(taskGroupHeader);
@@ -97,6 +95,10 @@ function TaskPaneView() {
   }
 
   createTaskRowContent = function(task){
+
+    // Use navs like here with margins for task rows:
+    // http://twitter.github.io/bootstrap/components.html#navs
+
     var html = '';
     html = html + '<div class="span1">';
     html = html + '   <button class="btn btn-mini pull-right btn-link" style="margin-top: 10px;" href="#" onclick="return false;">';

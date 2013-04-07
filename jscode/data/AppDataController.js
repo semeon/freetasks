@@ -14,10 +14,8 @@ function AppDataController() {
   }
 
 
-
   // AppData Controls
   // ... 
-
 
   // Controlling views
   displayProjectList = function () {

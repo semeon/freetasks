@@ -50,42 +50,38 @@
     <script type="text/javascript" language="javascript" src="jscode/settings/userSettings.js"></script>
 
 
-    <script type="text/javascript" language="javascript" src="jscode/auth/AuthModel.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/auth/AuthController.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/auth/AuthView.js"></script>
 
-    <script type="text/javascript" language="javascript" src="jscode/api/GDataController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/api/gDataController.js"></script>
 
-    <script type="text/javascript" language="javascript" src="jscode/appData/AppDataController.js"></script>
-    <script type="text/javascript" language="javascript" src="jscode/appData/ProjectListView.js"></script>
-    <script type="text/javascript" language="javascript" src="jscode/appData/ProjectModel.js"></script>
-    <script type="text/javascript" language="javascript" src="jscode/appData/TaskModel.js"></script>
-    <script type="text/javascript" language="javascript" src="jscode/appData/TaskPaneView.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/AppDataController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/ProjectListView.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/ProjectModel.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/TaskModel.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/TaskPaneView.js"></script>
 
+    <!-- 
     <script type="text/javascript" language="javascript" src="jscode/app/AppController.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/app/AppView.js"></script>    
+    -->
   </head>
 
 
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top"> <!-- Top nav bar -->
+  <body onload="onBodyLoad();">
+    <div class="navbar navbar-inverseX navbar-fixed-top"> <!-- Top nav bar -->
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="http://localhost/index.html" onclickx="return false;">GoogleTasks UI</a>
-
-          <div class="nav-collapse collapse">
-            <div id="loginStatus" class="pull-right"></div>
-
-            <ul class="nav">
-              <li class="active"><a href="http://localhost/index.html" onclickx="return false;">Home</a></li>
-              <li><a href="https://mail.google.com/tasks/canvas" target="_blank">GTasks Canvas</a></li>
-              <li><a href="https://www.google.com/calendar/render" target="_blank">Calendar</a></li>
-              <li><a href="https://mail.google.com/" target="_blank">GMail</a></li>
-              <li><a href="http://www.myhost.com:90/root/index.html">DEBUG</a></li>
-              <li><a href="http://twitter.github.com/bootstrap/components.html" target="_blank">Manual</a></li>
-
-            </ul>
-          </div>
+          <ul class="nav nav-pills">
+            <li><a href="https://mail.google.com/tasks/canvas"                      target="_blank">GTasks Canvas</a></li>
+            <li><a href="http://twitter.github.com/bootstrap/components.html"       target="_blank">Manual</a></li>
+            <li><a href="http://www.w3resource.com/twitter-bootstrap/tutorial.php"  target="_blank">Tutorial</a></li>
+          </ul>
+          <ul class="nav pull-right nav-pills">
+            <li id="loginButton"></li>  
+          </ul>
+          <p id="loginStatus" class="navbar-text pull-right"></p>       
         </div>
       </div>
     </div> <!-- /Top nav bar -->

@@ -1,16 +1,16 @@
 function AuthController(settings) {
-  // alert('AuthController started');
-  
+ 
   var self = this;
-  var authView = new AuthView();
-
   this.isLoggedIn = false;
   // TODO   this.isAccessDenied = false;
-
   if (settings.accessToken) {
     self.isLoggedIn = true;
   }
 
+  var authView = new AuthView(self.isLoggedIn);
+
+  // Public
+  // **************************************************
   this.login = function() {
     var requestUri = '';
     requestUri = requestUri + settings.requestUriBase + '?';
@@ -19,9 +19,6 @@ function AuthController(settings) {
     requestUri = requestUri + 'response_type=' + settings.responseType + '&';
     requestUri = requestUri + 'scope=' + settings.scope + '&';
     // requestUri = requestUri + '&state='' + authModel.state + '&';
-
-    // alert(settings.redirectUri);
-
     window.location.href = requestUri;
   }
 
@@ -29,24 +26,20 @@ function AuthController(settings) {
     // TODO
     window.location.href = settings.redirectUri;
   }
-  
-  this.displayLoginStatus = function () {
-    authView.displayLoginStatusMessage(self.isLoggedIn);
-
-    // Bind events
-    authView.loginButtonNavbar.bind('click', function() {
-      // alert('loginButton click...');
-      self.login();
-    });
-   
-    authView.logoutButton.bind('click', function() {
-      // alert('logoutButton click...');
-      self.logout();
-    });
-
-    
+ 
+  this.displayLoginStatus = function() {
+    authView.displayLoginStatusMessage();
+    authView.authButtonNode.bind( 'click', 
+                                  function(){
+                                    if (self.isLoggedIn) {
+                                        // alert('self.logout();');
+                                        self.logout();
+                                    } else {
+                                        // alert('self.login();');
+                                        self.login();
+                                    }
+                                  });
   }
-
  
 }
   

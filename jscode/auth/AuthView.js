@@ -1,55 +1,32 @@
-function AuthView(authModel) {
+function AuthView(loggedIn) {
 
   // alert('AuthView started');
-
-  
   var self = this;
-  
-  var loggedInMessageDivCode = '<p id="loggedInMessage" class="navbar-text">' +
-                                  'You are logged in to Google. ' + 
-                                  '<a id="logoutButton" href="#" class="navbar-link">Logout</a>.' +
-                                '</p>';
-  var loggedOutMessageDivCode = '<p id="loggedOutMessage" class="navbar-text">' +
-                                  'You are not logged in to Google. ' + 
-                                  '<a id="loginButton" href="#" class="navbar-link">Login</a>.' +
-                                '</p>';
 
-  var loginFormDivCode = '';
+  var loginStatusRoot = $('#loginStatus');
+  var loginButtonRoot = $('#loginButton');
 
+  var statusCode = '';
+  var loginButtonCode = '';
 
+  if (loggedIn) {
+    statusCode =  'You are logged in to Google.';
+    authButtonCode = '<a href="#">Logout</a>';
+    // loginButtonRoot.addClass('active');
 
-
-  this.resetButtons = function() {
-    self.loginButtonNavbar = $('#loginButton');
-    self.logoutButton = $('#logoutButton');
+  } else {
+    statusCode =  'You are not logged in to Google.';
+    authButtonCode ='<a href="#">Login to Google</a>';
   }
 
 
-  this.resetButtons();
+  // PUBLIC
+  // ******************************************
+  this.authButtonNode = $(authButtonCode);
 
-  this.loginStatusDiv = $('#loginStatus');
-  // TODO: Clear?
-  // this.loggedInMessageDiv = $('#loggedInMessage');
-  // this.loggedOutMessageDiv = $('#loggedOutMessage');
-
-  this.displayLoginStatusMessage = function (loggedIn){
-    // alert('displayLoginStatusMessage: loggedIn ' + loggedIn);
-    self.loginStatusDiv.empty();
-    if (loggedIn) {
-      // alert('logged in message: ' + loggedInMessageDivCode);
-      self.loginStatusDiv.append(loggedInMessageDivCode);
-    } else {
-      // alert('logged out message: ' + loggedOutMessageDivCode);
-      self.loginStatusDiv.append(loggedOutMessageDivCode);
-    }
-    self.resetButtons();
+  this.displayLoginStatusMessage = function (){
+    loginStatusRoot.empty();
+    loginButtonRoot.append(self.authButtonNode);
   }
-
- 
-  this.unhidePane = function(nodeId) {
-    var selector = '#' + nodeId;
-    $(selector).removeClass('hidden');
-  }
-
   
 }

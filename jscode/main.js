@@ -7,12 +7,10 @@ var settings = new AppSettings();
 
 var authController = new AuthController(settings.auth); 
 var pageController = new PageController(authController.isLoggedIn);
+var dataController = new DataController(settings); 
 
-// var apiController = new GDataController(settings.accessToken); 
 // var pageController = new AppView();
 // var dataController = new AppView();
-
-
 // var appView = new AppView();
 
 
@@ -20,6 +18,7 @@ function onBodyLoad() {
   authController.displayLoginStatus();
   if (authController.isLoggedIn) {
 
+    dataController.start();
     // appView.displayMainRow();
 
     // Load list of projects
@@ -28,6 +27,6 @@ function onBodyLoad() {
 
   } else {
     // appView.displayNotLoggedInAlert();
+
   }
 }
-

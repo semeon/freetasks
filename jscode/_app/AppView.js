@@ -1,3 +1,5 @@
+// DEPRECATED
+
 function AppView() {
   
   var self = this;

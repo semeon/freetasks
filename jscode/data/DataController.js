@@ -1,17 +1,62 @@
-function AppDataController() {
+function DataController(settings) {
 
   var self = this;
+  var dataModel = new DataModel();
 
-  var projectCollection = new Array;
-  var projectListView = new ProjectListView();
-  var taskPaneView = new TaskPaneView();
-  var gDataController = {};
+    var projectCollection = new Array;
 
-  // Init app data
-  this.init = function(gdc) {
-    gDataController = gdc;
+  // var projectListView = new ProjectListView();
+  // var taskPaneView = new TaskPaneView();
+  // var gDataController = {};
+
+  var apiController = new GoogleTasksApiController(settings); 
+
+
+  // Private
+  // *********************************************************************
+  $(document).ajaxStart(function() {
+    // alert('ajaxStart');
+   });
+
+  $(document).ajaxStop(function() {
+    //alert('ajaxStop');
+  });
+
+
+
+
+  // Public
+  // *********************************************************************
+
+  this.start = function() {
+
     self.loadProjects();
+
   }
+
+  // Project Data Loading
+  this.loadProjects = function() {
+
+    onProjectListLoad = function(data) {
+
+      // taskPaneView.clearTaskPane();
+
+      // Sorting??
+      // var sortedData = cats = $(data).sort(sortItemsByTitle); 
+
+      for (var i = 0; i < data.items.length; i++) {
+        var project = createProject(data.items[i]);
+        // alert(project.id + ' | ' + project.title);
+        dataModel.projectList[project.id] = project;
+      }
+    }
+
+    apiController.requestProjects(onProjectListLoad);
+    // apiController.genericRequest( settings.api.projectsRequestUri,
+    //                               {access_token: settings.auth.accessToken},
+    //                               onProjectListLoad);
+  }
+
 
 
   // AppData Controls
@@ -57,19 +102,7 @@ function AppDataController() {
       return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;  
   };
 
-  onProjectListLoad = function(data) {
-    // taskPaneView.clearTaskPane();
-    var sortedData = cats = $(data).sort(sortItemsByTitle); 
-    for (var i = 0; i < sortedData.length; i++) {
-      var project = createProject(sortedData[i]);
-      projectCollection.push(project);
-      taskPaneView.appendEmptyTaskGroupRow(project.id);
-      if (i == 0) {
-        // toggleSelection(project);
-      }
-    }
-    displayProjectList();
-  }
+
 
   this.onTaskListLoad = function(data, project) {
     // var sortedData = cats = $(data).sort(sortItemsByTitle); 
@@ -95,11 +128,7 @@ function AppDataController() {
 
   }
 
-  // Project Data Loading
-  this.loadProjects = function() {
-    // Request projects with AJAX and call 'onProjectListLoad'
-    gDataController.requestProjectsJson(onProjectListLoad);
-  }
+
 
   this.reloadProjectTasks = function (project) {
     // Request project's tasks with AJAX and call 'onTaskListLoad'

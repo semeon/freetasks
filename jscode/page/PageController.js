@@ -1,16 +1,21 @@
-function PageController() {
+function PageController(isLoggedIn) {
   
   var self = this;
 
-  var pageModel = new PageModel();
-  var pageView = new PageView(pageModel);
-  
-  pageView.pageBody.ready(function() {
-    // alert('Body ready');
-    var appController = new AppController();
-    appController.init();
-  });
-  
+  this.pageView = new PageView();
+
+  if (!isLoggedIn) {
+    // self.pageView.displayNotLoggedInMessage();
+    self.pageView.showWelcomeBanner();
+
+  } else {
+    self.pageView.displayLoggedInMessage();
+    self.pageView.displayMainRow();
+
+  }
+
+
+
   
 }
 

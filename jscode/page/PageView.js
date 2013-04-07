@@ -1,11 +1,52 @@
-function PageView(appModel) {
+function PageView() {
   
   var self = this;
+ 
+  var mainRow = $('#mainRow');
+  var welcomeBanner = $('#welcomeBanner');
 
-  this.pageBody = $('body');
 
-  this.displayProjectListPane = function(projectList) {
-    
-  }  
+  // Private
+  // ************************************************************************************************
+  function pleaseLoginMessage () {
+    $.pnotify({
+              text: 'Please login to Google to see your projects and tasks',
+              history: false
+            });
+  }
+
+  function loggedInMessage () {
+    $.pnotify({
+              text: 'You are logged in to Google. You can logout anytime.',
+              type: 'success',
+              history: false
+            });
+  }
+
+
+  // Public
+  // ************************************************************************************************
+
+  // Logged out ---------------------------------------
+  this.displayNotLoggedInMessage = function() {
+    $(pleaseLoginMessage);    
+  }
+
+  this.showWelcomeBanner = function() {
+    welcomeBanner.removeClass('hide');    
+  }
+
+
+
+  // Logged in ----------------------------------------
+  this.displayLoggedInMessage = function() {
+    $(loggedInMessage);    
+  }
+
+  this.displayMainRow = function() {
+    mainRow.removeClass('hidden');
+  }
+
+
   
 }

@@ -16,12 +16,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.css" >
-    <link rel="stylesheet" href="bootstrap-notify-master/css/bootstrap-notify.css" >
-    <link rel="stylesheet" href="css/tasks.css">
-
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -36,30 +30,39 @@
     <!-- Fav and touch icons -->
     <LINK REL="SHORTCUT ICON" HREF="https://mail.google.com/tasks/res/favicon.ico">
 
-    <!-- Le JavaScript -->
-    <script src="jquery/jquery-1.9.0.min.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-    <script src="bootstrap-notify-master/js/bootstrap-notify.js"></script>
+    <!-- Libraries -->
+    <link rel="stylesheet" href="jslib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="jslib/bootstrap/css/bootstrap-responsive.css" >
+    <link rel="stylesheet" href="jslib/pnotify/jquery.pnotify.default.css"/>
+
+    <script type="text/javascript" language="javascript" src="jslib/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" language="javascript" src="jslib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" language="javascript" src="jslib/pnotify/jquery.pnotify.js"></script>
     <script type="text/javascript" language="javascript" src="jslib/moment.min.js"></script>
-    <!-- <script type="text/javascript" language="javascript" src="jslib/date.js"></script> -->
-    <!-- <script type="text/javascript" language="javascript" src="jslib/date.format.js"></script> -->
     <script type="text/javascript" language="javascript" src="jslib/jquery.url.js"></script>
     <script type="text/javascript" language="javascript" src="jslib/jquery.cookie.js"></script>
 
+    <!-- Custom Script -->
     <script type="text/javascript" language="javascript" src="jscode/settings/appSettings.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/settings/userSettings.js"></script>
-
 
     <script type="text/javascript" language="javascript" src="jscode/auth/AuthController.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/auth/AuthView.js"></script>
 
+    <script type="text/javascript" language="javascript" src="jscode/page/PageController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/page/PageView.js"></script>
+
     <script type="text/javascript" language="javascript" src="jscode/api/gDataController.js"></script>
 
-    <script type="text/javascript" language="javascript" src="jscode/data/AppDataController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/DataController.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/ProjectListView.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/ProjectModel.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/TaskModel.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/TaskPaneView.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/tasks.css">
+
 
     <!-- 
     <script type="text/javascript" language="javascript" src="jscode/app/AppController.js"></script>
@@ -75,8 +78,9 @@
           <a class="brand" href="http://localhost/index.html" onclickx="return false;">GoogleTasks UI</a>
           <ul class="nav nav-pills">
             <li><a href="https://mail.google.com/tasks/canvas"                      target="_blank">GTasks Canvas</a></li>
-            <li><a href="http://twitter.github.com/bootstrap/components.html"       target="_blank">Manual</a></li>
-            <li><a href="http://www.w3resource.com/twitter-bootstrap/tutorial.php"  target="_blank">Tutorial</a></li>
+            <li><a href="http://twitter.github.com/bootstrap/components.html"       target="_blank">Bootstrap Manual</a></li>
+            <li><a href="http://www.w3resource.com/twitter-bootstrap/tutorial.php"  target="_blank">Bootstrap Tutorial</a></li>
+            <li><a href="http://pinesframework.org/pnotify/"                        target="_blank">Pine Notify</a></li>
           </ul>
           <ul class="nav pull-right nav-pills">
             <li id="loginButton"></li>  
@@ -89,10 +93,22 @@
 
     <div class="container-fluid"> <!--fluid-container-->
 
-      <div class="row-fluid"> <!-- notifications bar -->
-        <div id="messageBar" class="span6 offset3">
+
+      <div id="welcomeBanner" class="row-fluid hide">
+        <div class="span8 offset2 well-large">
+          <div class="hero-unit">
+          <h1>Welcome!</h1>
+          <br/>
+          <p>
+            This app is just a friendly interface for GoogleTasks, so all your data is stored on reliable and secure Google servers.
+            <br/>
+            Enjoy new experience!
+          </p>
+          <br/>
+          <p><a href="#" class="btn btn-primary btn-large" onclick="authController.login()">Login to Google »</a></p>
+          </div>          
         </div>
-      </div><!-- /notifications bar -->
+      </div>
 
       <div id="mainRow" class="row-fluid hidden">
         <div class="span3">  <!-- Left column -->
@@ -127,9 +143,6 @@
 
           <div class="row-fluid"> <!-- Task groups --> 
             <div id="taskPane" class="span12">
-
-
-
             </div>
           </div><!-- /Task groups --> 
 

@@ -6,6 +6,8 @@ var settings = new AppSettings();
 // appController.init();
 
 var authController = new AuthController(settings.auth); 
+var pageController = new PageController(authController.isLoggedIn);
+
 // var apiController = new GDataController(settings.accessToken); 
 // var pageController = new AppView();
 // var dataController = new AppView();
@@ -14,11 +16,8 @@ var authController = new AuthController(settings.auth);
 // var appView = new AppView();
 
 
-
 function onBodyLoad() {
   authController.displayLoginStatus();
-
-
   if (authController.isLoggedIn) {
 
     // appView.displayMainRow();

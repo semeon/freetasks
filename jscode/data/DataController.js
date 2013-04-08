@@ -1,7 +1,7 @@
 function DataController(settings) {
 
   var self = this;
-  var dataModel = new DataModel();
+  this.dataModel = new DataModel();
 
     var projectCollection = new Array;
 
@@ -12,8 +12,9 @@ function DataController(settings) {
   var apiController = new GoogleTasksApiController(settings); 
 
 
-  // Private
-  // *********************************************************************
+// *********************************************************************
+// Event Handlers
+// *********************************************************************
   $(document).ajaxStart(function() {
     // alert('ajaxStart');
    });
@@ -25,37 +26,113 @@ function DataController(settings) {
 
 
 
-  // Public
-  // *********************************************************************
+
+
+// *********************************************************************
+// Private
+// *********************************************************************
+
+
+  // -----------------------------------------------------------------------
+  function sortItemsByTitle(a,b) {  
+      return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;  
+  } // ---------------------------------------------------------------------
+
+
+
+  // -----------------------------------------------------------------------
+  buildTaskTree = function(project) {
+    if (project.taskSet.length != 0) {
+
+      var e = 0;
+
+      for (var i = 0;  i < project.taskSet.length; i++) {
+        var task = project.taskSet[i];
+
+        for (var j = 0;  j < project.taskSet.length; j++) {
+          var subtask = project.taskSet[j];
+          if (!subtask.isInTree) {
+            if (subtask.parentId == "none") {
+              project.rootTasks.push(subtask);
+            } else if (subtask.parentId == task.id) {
+              task.subTasks.push(subtask);
+            } 
+            subtask.isInTree = true;
+          }
+        }
+      }
+    }
+  } // ------------------------------------------------------------------
+
+
+
+
+// *********************************************************************
+// Public
+// *********************************************************************
 
   this.start = function() {
-
     self.loadProjects();
-
   }
 
+
   // Project Data Loading
+  // -----------------------------------------------------------------------
   this.loadProjects = function() {
-
-    onProjectListLoad = function(data) {
-
+    apiController.requestProjects(processProjectList);
+    function processProjectList(data) {
       // taskPaneView.clearTaskPane();
 
       // Sorting??
-      // var sortedData = cats = $(data).sort(sortItemsByTitle); 
+      //var sortedData = cats = $(data).sort(sortItemsByTitle); 
 
       for (var i = 0; i < data.items.length; i++) {
         var project = createProject(data.items[i]);
         // alert(project.id + ' | ' + project.title);
-        dataModel.projectList[project.id] = project;
+        self.dataModel.projectList[project.id] = project;
+
+        self.loadTasks(project);
       }
     }
+  } // ---------------------------------------------------------------------
 
-    apiController.requestProjects(onProjectListLoad);
-    // apiController.genericRequest( settings.api.projectsRequestUri,
-    //                               {access_token: settings.auth.accessToken},
-    //                               onProjectListLoad);
-  }
+
+
+
+  // task Data Loading
+  // -----------------------------------------------------------------------
+  this.loadTasks = function(project) {
+
+    function processTaskList(data) {
+      // var sortedData = cats = $(data).sort(sortItemsByTitle); 
+      // alert('@@@@@@@@');
+      project.isLoaded = true;
+      delete project.taskSet;
+      delete project.rootTasks;
+      project.taskSet = new Array;
+      project.rootTasks = new Array;
+
+      for (var i = 0; i < data.items.length; i++) {
+        var task = new Task(data.items[i]);
+        project.taskSet[task.id] = task;
+      }
+      // buildTaskTree(project);
+    }
+
+    apiController.requestTasks(project.id, processTaskList);
+  } // ---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,9 +175,7 @@ function DataController(settings) {
     }
   }  
 
-  function sortItemsByTitle(a,b) {  
-      return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;  
-  };
+
 
 
 
@@ -137,7 +212,7 @@ function DataController(settings) {
   }
 
 
-  buildTaskTree = function(project) {
+  buildTaskTree111 = function(project) {
     if (project.taskSet.length != 0) {
 
       var e = 0;

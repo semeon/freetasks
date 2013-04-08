@@ -9,6 +9,20 @@ function GoogleTasksApiController(settings) {
       options.global = true;
   });
 
+
+// *********************************************************************
+// Private
+// *********************************************************************
+
+
+
+
+
+// *********************************************************************
+// Public
+// *********************************************************************
+
+
   this.genericRequest = function(requestUri, requestParams, callback) {
     // self.pendingRequestCounter++;
     // self.totalRequestCounter++;
@@ -29,12 +43,29 @@ function GoogleTasksApiController(settings) {
               url: settings.api.projectsRequestUri,
               data: {access_token: settings.auth.accessToken},
               dataType: 'jsonp',
-              crossDomain: true,
+              // crossDomain: true,
               success: function(data) {
                           callback(data);
                         }
             });
   }  
+
+  this.requestTasks = function(projectId, callback) {
+    // AJAX START and STOP dont work with this but callbcak does
+
+    $.ajax({
+              url: settings.api.tasksRequestUri(projectId),
+              data: {access_token: settings.auth.accessToken},
+              dataType: 'jsonp',
+              // crossDomain: true,
+              success: function(data) {
+                          callback(data);
+                        }
+            });
+  } 
+
+
+  // OLD -----------------------------------------------
 
   this.requestProjectsJson = function(callback) {
     // alert('Requesting projects JSON..');

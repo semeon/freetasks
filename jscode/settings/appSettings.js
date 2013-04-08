@@ -58,6 +58,7 @@ function AppSettings() {
     self.api.projectsRequestUri = 'https://www.googleapis.com/tasks/v1/users/@me/lists?callback=?';
     self.api.tasksRequestUri = function(projectId) {
       var uri = 'https://www.googleapis.com/tasks/v1/lists/' + projectId + '/tasks?callback=?';
+      return uri;
     };
 
 

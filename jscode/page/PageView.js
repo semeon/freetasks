@@ -17,7 +17,7 @@ function PageView() {
 
   function loggedInMessage () {
     $.pnotify({
-              text: 'You are logged in to Google. You can logout anytime.',
+              text: 'You are logged in to Google.',
               type: 'success',
               history: false
             });

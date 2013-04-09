@@ -53,6 +53,7 @@ function GoogleTasksApiController(settings) {
   this.requestTasks = function(projectId, callback) {
     // AJAX START and STOP dont work with this but callbcak does
 
+
     $.ajax({
               url: settings.api.tasksRequestUri(projectId),
               data: {access_token: settings.auth.accessToken},

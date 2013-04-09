@@ -7,7 +7,7 @@ var settings = new AppSettings();
 
 var authController = new AuthController(settings.auth); 
 var pageController = new PageController(authController.isLoggedIn);
-var dataController = new DataController(settings); 
+var dataController = new DataController(settings, pageController); 
 
 // var pageController = new AppView();
 // var dataController = new AppView();
@@ -16,6 +16,7 @@ var dataController = new DataController(settings);
 
 function onBodyLoad() {
   authController.displayLoginStatus();
+
   if (authController.isLoggedIn) {
 
     dataController.start();

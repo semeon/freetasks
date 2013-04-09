@@ -27,6 +27,16 @@ function PageView() {
   // Public
   // ************************************************************************************************
 
+  this.showMessage = function(title, text, type) {
+    $.pnotify({
+              title: title,
+              text: text,
+              type: type,
+              history: false
+            });
+
+  }
+
   // Logged out ---------------------------------------
   this.displayNotLoggedInMessage = function() {
     $(pleaseLoginMessage);    

@@ -9,20 +9,14 @@ var authController = new AuthController(settings.auth);
 var pageController = new PageController(authController.isLoggedIn);
 var dataController = new DataController(settings, pageController); 
 
-// var pageController = new AppView();
-// var dataController = new AppView();
-// var appView = new AppView();
+var dataView = new DataController(settings, dataController.eventHandler, pageController); 
 
 
 function onBodyLoad() {
-
-
   console.log('Requesting login status.');
-
   authController.displayLoginStatus();
 
   if (authController.isLoggedIn) {
-
     console.log('Logged in. Starting data controller.');
     dataController.start();
     // appView.displayMainRow();

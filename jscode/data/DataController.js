@@ -30,9 +30,6 @@ function DataController(settings, pageController) {
   this.eventHandler.taskListLoaded = function() {
     console.log('Task list loaded evevent called.');
 
-    
-
-
   }
 
 
@@ -41,6 +38,8 @@ function DataController(settings, pageController) {
 // Public
 // *********************************************************************
 
+  // Start load
+  // -----------------------------------------------------------------------
   this.start = function() {
     self.loadProjects();
   }

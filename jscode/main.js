@@ -5,9 +5,11 @@ var settings = new AppSettings();
 // var appController = new AppController(appSettings);
 // appController.init();
 
-var authController = new AuthController(settings.auth); 
-var pageController = new PageController(authController.isLoggedIn);
-var dataController = new DataController(settings, pageController); 
+var log = new Logger(true);
+
+var authController = new AuthController(settings.auth, log); 
+var pageController = new PageController(authController.isLoggedIn, log);
+var dataController = new DataController(settings, pageController, log); 
 
 // var pageController = new AppView();
 // var dataController = new AppView();
@@ -15,6 +17,9 @@ var dataController = new DataController(settings, pageController);
 
 
 function onBodyLoad() {
+
+  log.info('Body loaded');
+
   authController.displayLoginStatus();
 
   if (authController.isLoggedIn) {

@@ -38,7 +38,7 @@ function PageController(isLoggedIn) {
       switch(error.code)
       {
         case 401:
-          alertText = alertText + '\nProbably, your seccion expired. Please re-login.'
+          alertText = alertText + '\nProbably, your session expired. Please re-login.'
           break;
         default:
       }

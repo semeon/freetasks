@@ -2,12 +2,15 @@ function AppSettings() {
 
   self = this;
 
-  // API Setting
+  // APP Setting
   // ***************************************************************
   this.app = {};
-
     self.app.url = 'http://localhost';
+    self.app.logging = true;
 
+    if (!self.app.logging) {
+      console.log = function() {}
+    }
 
   // Authentication Setting
   // ***************************************************************

@@ -12,20 +12,20 @@ function DataController(settings, pageController) {
 // *********************************************************************
 // Event Handlers
 // *********************************************************************
-  $(document).ajaxStart(function() {
-    if (firstDataLoad) {
-      // pageController.dataLoadStarted();
-    }
-   });
+  // $(document).ajaxStart(function() {
+  //   if (firstDataLoad) {
+  //     // pageController.dataLoadStarted();
+  //   }
+  //  });
 
-  $(document).ajaxStop(function() {
-    if (firstDataLoad && !dataLoadErrorOccured) {
-      pageController.displayPage();      
-      // pageController.dataLoadCompleted();
-    }
+  // $(document).ajaxStop(function() {
+  //   if (firstDataLoad && !dataLoadErrorOccured) {
+  //     pageController.displayPage();      
+  //     // pageController.dataLoadCompleted();
+  //   }
 
-    firstDataLoad = false;
-  });
+  //   firstDataLoad = false;
+  // });
 
   this.eventHandler.taskListLoaded = function() {
     console.log('Task list loaded evevent called.');

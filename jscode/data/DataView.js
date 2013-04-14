@@ -5,8 +5,8 @@ function DataView(settings, eventHandler, pageController) {
   var projectListDisplayed = false;
   var taskListDisplayed = false;
 	var listItemIdPrefix = 'projectLisItem_';
-	var taskTreeItemIdPrefix = 'projectLisItem_';
 
+  var taskGroups = {};
 
 
 // -------------------------------------------------------------------------
@@ -14,29 +14,18 @@ function DataView(settings, eventHandler, pageController) {
 // -------------------------------------------------------------------------
 
   // -------------------------------------------------------------------------
-  this.displayTaskTree = function(project) {
+  this.createTaskTree = function(project) {
     console.log('Starting displayTaskTree for ' + project.id);
 
   	if(!taskListDisplayed) self.displayTaskListPane();
 
-  	var root = $('#taskPaneRoot');
-    var divId = taskTreeItemIdPrefix + project.id;
-    var taskGroupNode = $('<div class="hide"></div>'); 
+  	var rootNode = $('#taskPaneRoot');
+    var taskGroup = new TaskTreeView(project, rootNode); 
+    taskGroups[project.id] = taskGroup;
 
-    var titleNode = $('<h4>' + project.title + '</h4>');
+    taskGroup.show();
 
 
-
-		root.append(taskGroupNode);
-		root.append(titleNode);
-    taskGroupNode.attr('id', divId);
-    // self.updateProjectSelection(project);
-	  // a.bind('click', 
-	  //         function() {
-	  //           // alert('CLICK...');
-	  //           handler(project);
-	  //         });
-		taskGroupNode.fadeIn();
   }
   // -------------------------------------------------------------------------
 

@@ -18,7 +18,7 @@ function DataEventHandler(dataView) {
   this.taskListLoaded = function(project) {
     console.log('Project loaded event called.');
     dataView.displayProjectListItem(project, taskListItemClick);
-    dataView.displayTaskTree(project);
+    dataView.createTaskTree(project);
   }
 
   function taskListItemClick (project) {

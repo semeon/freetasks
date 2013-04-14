@@ -1,36 +1,24 @@
 function DataController(settings, pageController) {
 
   var self = this;
-  this.dataModel = new DataModel();
-  this.eventHandler = {};
 
+  // DATA MODEL
+  //this.dataModel = new DataModel();
+  this.dataModel = {};
+  this.dataModel.projectList = {};
+
+  // Data View
+  var dataView = new DataView(settings); 
+
+  // EVENT HANDLER
+  this.eventHandler = new DataEventHandler(dataView);
+
+  // PRIVATE
   var apiController = new GoogleTasksApiController(settings); 
   var firstDataLoad = true;
   var dataLoadErrorOccured = false;
 
 
-// *********************************************************************
-// Event Handlers
-// *********************************************************************
-  // $(document).ajaxStart(function() {
-  //   if (firstDataLoad) {
-  //     // pageController.dataLoadStarted();
-  //   }
-  //  });
-
-  // $(document).ajaxStop(function() {
-  //   if (firstDataLoad && !dataLoadErrorOccured) {
-  //     pageController.displayPage();      
-  //     // pageController.dataLoadCompleted();
-  //   }
-
-  //   firstDataLoad = false;
-  // });
-
-  this.eventHandler.taskListLoaded = function() {
-    console.log('Task list loaded evevent called.');
-
-  }
 
 
 
@@ -65,22 +53,22 @@ function DataController(settings, pageController) {
       if (data.items) {
         for (var i = 0; i < data.items.length; i++) {
 
-          var project = data.items[i];
+          // PROJECT CREATED HERE
+          var project = new Project(data.items[i]);
+          console.log('  Creating new project: ' + project.title);
+
           self.dataModel.projectList[project.id] = project;
-
-          // delete project.taskSet;
-          // delete project.rootTasks;
-          project.taskSet = {};
-          project.taskTree = {};        
-
           self.loadTasks(project);
         }
+
       } else if (data.error) {
         dataLoadErrorOccured = true;
         pageController.processDataLoadError(data.error);
+
       } else {
         dataLoadErrorOccured = true;
         pageController.processDataLoadError();
+
       }
     }
   } // ---------------------------------------------------------------------
@@ -105,7 +93,7 @@ function DataController(settings, pageController) {
         for (var i = 0; i < data.items.length; i++) {
           var task = new Task(data.items[i]);
 
-          console.log('  Loaded task #' + i + ' ' + task.title);
+          console.log('  Creating task #' + i + ' ' + task.title);
           project.taskSet[task.id] = task;
         }
 
@@ -145,15 +133,13 @@ function DataController(settings, pageController) {
       var item = fullList[itemId];
 
       if (item.parentId == node.id) {
-        console.log( '  "' + item.title + '" attached to "' + node.title + '"');
+        // console.log( '  "' + item.title + '" attached to "' + node.title + '"');
 
         node.children[itemId] = item;
         attachChildrenToParent(item, fullList);
       }
     }
   } // ---------------------------------------------------------------------
-
-
 
 
   // AppData Controls

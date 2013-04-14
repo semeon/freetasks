@@ -55,13 +55,19 @@
     <script type="text/javascript" language="javascript" src="jscode/api/gDataController.js"></script>
 
     <script type="text/javascript" language="javascript" src="jscode/data/DataController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/DataEventHandler.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/DataView.js"></script>
+
+    <!--
     <script type="text/javascript" language="javascript" src="jscode/data/DataModel.js"></script>
+    -->
 
-
-    <script type="text/javascript" language="javascript" src="jscode/data/ProjectListView.js"></script>
-    <script type="text/javascript" language="javascript" src="jscode/data/ProjectModel.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/TaskModel.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/ProjectModel.js"></script>
+    <!-- 
+    <script type="text/javascript" language="javascript" src="jscode/data/ProjectListView.js"></script>
     <script type="text/javascript" language="javascript" src="jscode/data/TaskPaneView.js"></script>
+    -->
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/tasks.css">
@@ -113,10 +119,11 @@
         </div>
       </div>
 
-      <div id="mainRow" class="row-fluid hidden">
-        <div class="span3">  <!-- Left column -->
-            <div class="row-fluid">
-              <div class="span12">
+      <div id="mainRow" class="row-fluid">
+        <div id="projectListPane" class="span3 hide">  <!-- Left column -->
+
+<!--             <div class="row-fluid">
+              <div class="span12" >
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group">
                     <a id="addNewProjectButton" class="btn btn-small btn-primary" href="#">Add project</a>
@@ -124,16 +131,20 @@
                 </div>
               </div>
             </div>
-
+ -->
             <div class="row-fluid">
               <div class="span12 well well-small">
-                <ul id="projectListPane" class="nav nav-pills nav-stacked">
+                <div class="btn-group pull-right">
+                  <a id="addNewProjectButton" class="btn btn-mini btn" href="#">Add project</a>
+                </div>    
+                <ul id="projectListRoot" class="nav nav-pills nav-stacked">
+                  <li class="nav-header">Your projects</li>
                 </ul>
               </div>
             </div>
         </div>
 
-        <div class="span8"> <!-- Right column --> 
+        <div class="span8 hide"> <!-- Right column --> 
           <div class="row-fluid"> <!-- Controls --> 
             <div class="span12">
               <div class="btn-toolbar pull-right">

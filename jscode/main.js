@@ -9,7 +9,6 @@ var authController = new AuthController(settings.auth);
 var pageController = new PageController(authController.isLoggedIn);
 var dataController = new DataController(settings, pageController); 
 
-var dataView = new DataController(settings, dataController.eventHandler, pageController); 
 
 
 function onBodyLoad() {

@@ -9,11 +9,13 @@ function Project(json) {
    "selfLink": "https://www.googleapis.com/tasks/v1/users/@me/lists/MDIxODQ2OTM2MTQ0OTM3MDQ4MTU6MDow"
   */
  
+
   this.id = json.id;
   this.title = json.title;
   this.selfLink = json.selfLink;
-  this.taskSet = new Array;
-  this.rootTasks = new Array;
+
+  this.taskSet = {};
+  this.taskTree = {};        
 
   this.isLoaded = false;
   this.isSelected = false;

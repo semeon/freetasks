@@ -136,7 +136,7 @@
             </div>
         </div>
 
-        <div id="taskListPane" class="span6 hide"> <!-- Right column --> 
+        <div id="taskListPane" class="span6 hides"> <!-- Right column --> 
           <div class="row-fluid"> <!-- Controls --> 
             <div class="span12">
               <div class="btn-toolbar pull-right">
@@ -149,6 +149,97 @@
 
           <div class="row-fluid"> <!-- Task groups --> 
             <div id="taskPaneRoot" class="span12">
+              <!-- MOKE UP -->
+
+
+              <div class="taskNode">
+
+                <div class="accordion" id="accordion2" style="margin-bottom: 0px;">
+                  <div class="accordion-group">
+                    <div class="accordion-heading">
+
+                      <a type="link" 
+                          class="pull-left"
+                          data-toggle="collapse" 
+                          data-target="#subtasks1" 
+                          href="#"><i class="icon-chevron-right"></i></a>
+
+                      <button 
+                        class="btn btn-mini btn-success pull-left" 
+                        data-toggle="button"><i class="icon-check"></i></button>
+
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        Task name
+                      </a>                      
+
+                      <a type="link" 
+                          class="pull-right"
+                          data-toggle="collapse" 
+                          data-target="#subtasks1" 
+                          href="#"><i class="icon-chevron-down"></i></a>
+                        
+
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse">
+                      <div class="accordion-inner">
+                        Anim pariatur cliche...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="subtasks1" class="subtasksRootNode collapse"  style="margin-left:30px;">
+
+                  <div class="taskNode">
+                    <div class="accordion" id="accordion3" style="margin-bottom: 0px;">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+                            Collapsible Group Item #2
+                          </a>
+                        </div>
+                        <div id="collapse2" class="accordion-body collapse">
+                          <div class="accordion-inner">
+                            Anim pariatur cliche...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="subtasksRootNode" style="margin-left:30px;">
+
+                      <div class="taskNode">
+                        <div class="accordion" id="accordion4" style="margin-bottom: 0px;">
+                          <div class="accordion-group">
+                            <div class="accordion-heading">
+                              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse4">
+                                Collapsible Group Item #3
+                              </a>
+                            </div>
+                            <div id="collapse4" class="accordion-body collapse">
+                              <div class="accordion-inner">
+                                Anim pariatur cliche...
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+
+
+
+
+                </div>
+              </div>
+
+
+
             </div>
           </div><!-- /Task groups --> 
 

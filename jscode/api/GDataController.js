@@ -43,16 +43,16 @@ function GoogleTasksApiController(settings) {
             });
   }  
 
-  this.requestTasks = function(projectId, callback) {
+  this.requestTasks = function(project, callback) {
     console.log('Requesting tasks..');
-    console.log('  URL: ' + settings.api.tasksRequestUri(projectId));
+    console.log('  URL: ' + settings.api.tasksRequestUri(project.id));
     $.ajax({
-              url: settings.api.tasksRequestUri(projectId),
+              url: settings.api.tasksRequestUri(project.id),
               data: {access_token: settings.auth.accessToken},
               dataType: 'jsonp',
               // crossDomain: true,
               success: function(data) {
-                          callback(data);
+                          callback(data, project);
                         }
             });
   } 

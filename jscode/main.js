@@ -10,7 +10,6 @@ var pageController = new PageController(authController.isLoggedIn);
 var dataController = new DataController(settings, pageController); 
 
 
-
 function onBodyLoad() {
   console.log('Requesting login status.');
   authController.displayLoginStatus();

@@ -2,22 +2,33 @@ function DataController(settings, pageController) {
 
   var self = this;
 
-  // DATA MODEL
-  //this.dataModel = new DataModel();
+  this.eventHandler = {};
   this.dataModel = {};
   this.dataModel.projectList = {};
 
-  // Data View
-  var dataView = new DataView(settings); 
-
-  // EVENT HANDLER
-  this.eventHandler = new DataEventHandler(dataView);
+  var dataView = new DataView(settings, self.eventHandler); 
 
   // PRIVATE
   var apiController = new GoogleTasksApiController(settings); 
   var firstDataLoad = true;
   var dataLoadErrorOccured = false;
 
+
+// *********************************************************************
+// Event Handler
+// *********************************************************************
+
+    self.eventHandler.taskListLoaded = function(project) {
+        console.log('Project loaded event called.');
+        dataView.displayProjectListItem(project, projectListItemClick);
+        // dataView.createTaskTree(project);
+
+    }
+
+    function projectListItemClick (project) {
+        project.isSelected = !project.isSelected;
+        dataView.updateProjectSelection(project);
+    }
 
 
 
@@ -82,26 +93,15 @@ function DataController(settings, pageController) {
     console.log('Starting tasks load for: ' + project.title);
 
     // Request Data
-    apiController.requestTasks(project.id, processTaskList);
+    apiController.requestTasks(project, processTaskList);
 
     // Process Response
-    function processTaskList(data) {
-      // var sortedData = cats = $(data).sort(sortItemsByTitle); 
+    function processTaskList(data, project) {
+      console.log('Processing tasks for ' + project.title);
       project.isLoaded = true;
 
       if (data.items) {      
-        for (var i = 0; i < data.items.length; i++) {
-          var task = new Task(data.items[i]);
-
-          console.log('  Creating task #' + i + ' ' + task.title);
-          project.taskSet[task.id] = task;
-        }
-
-        project.taskTree.id = 'none';
-        project.taskTree.title = 'root';
-        console.log('  Building task tree.');
-        attachChildrenToParent(project.taskTree, project.taskSet);
-
+        project.addTasks(data.items);
         self.eventHandler.taskListLoaded(project);
 
       } else if (data.error) {
@@ -120,28 +120,6 @@ function DataController(settings, pageController) {
 // Private
 // *********************************************************************
 
-  // -----------------------------------------------------------------------
-  function sortItemsByTitle(a,b) {  
-      return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;  
-  } // ---------------------------------------------------------------------
-
-
-  // -----------------------------------------------------------------------
-  function attachChildrenToParent (node, fullList) {
-    node.children = {};
-    for (itemId in fullList) {
-      var item = fullList[itemId];
-
-      if (item.parentId == node.id) {
-        // console.log( '  "' + item.title + '" attached to "' + node.title + '"');
-
-        node.children[itemId] = item;
-        attachChildrenToParent(item, fullList);
-      }
-    }
-  } // ---------------------------------------------------------------------
-
-
   // AppData Controls
   // ... 
 
@@ -154,29 +132,6 @@ function DataController(settings, pageController) {
   //     projectListView.displayProject(project, projectListItemClick);
   //   }
   // }
-
-
-  // // Event handlers
-  // projectListItemClick = function (project) {
-  //   toggleSelection(project);
-  // }
-
-
-  // toggleSelection = function (project) {
-  //   project.isSelected = !project.isSelected;
-
-  //   // TODO - implement as different hide and show functions
-  //   projectListView.updateProjectSelection(project);
-
-  //   if (project.isSelected) {
-  //     self.reloadProjectTasks(project);
-  //   } else {
-  //     taskPaneView.hideTaskGroup(project.id);
-  //   }
-  // }  
-
-
-
 
 
 }

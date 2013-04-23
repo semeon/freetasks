@@ -29,3 +29,12 @@
 hr {
 	margin-top: 0px;
 }
+
+.indent {
+    margin-left: 20px;
+}
+
+.border-bottom {
+	border-bottom: 1px solid #eee;
+	margin-bottom: +20px;
+}

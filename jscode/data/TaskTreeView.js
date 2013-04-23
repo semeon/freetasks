@@ -2,8 +2,8 @@ function TaskTreeView(project, rootNode) {
 
   var self = this;
 
-  var taskTreeItemIdPrefix = 'taskLisItem_';
-  var taskGroupNode = $('<div class="hide"></div>'); 
+  var taskTreeItemIdPrefix = 'taskListItem_';
+  var taskGroupNode = $('<div class="border-bottom"></div>'); 
 
   constructor();
 
@@ -11,137 +11,120 @@ function TaskTreeView(project, rootNode) {
 // PRIVATE
 // -----------------------------------------------------------------
 
-  function constructor() {
+    // <ul id="" class="nav nav-pills nav-stacked">
+
+    //   <li class="nav-header">Project #1</li>
+
+    //   <li class="hide active" style="display: list-item;">
+    //     <a href="#" onclick="return false">
+    //       <input type="checkbox"/>
+    //       <span>5 test</span>
+    //       <i class="icon-chevron-right pull-right"></i>
+    //       <span class="badge badge-warning pull-right">Tomorrow</span>
+    //     </a>
+    //   </li>
+
+    //   <li class="hide active" style="display: list-item;">
+    //     <a href="#" onclick="return false">1 test project <i class="icon-chevron-right pull-right"></i></a></li>
+
+    //   <li class="hide" style="display: list-item;">
+    //     <a href="#" onclick="return false">4 test <i class="icon-chevron-right pull-right"></i></a></li>
+
+    //   <li class="hide" style="display: list-item;">
+    //     <a href="#" onclick="return false">a test project <i class="icon-chevron-right pull-right"></i></a></li>
+    // </ul>
+
+function constructor() {
+
     rootNode.append(taskGroupNode);
 
-    var divId = taskTreeItemIdPrefix + project.id;
-    taskGroupNode.attr('id', divId);
-
-    var titleNode = $('<span class="pulls-left"><strong>' + project.title + '</strong></span>');
-    taskGroupNode.append(titleNode);
-
-    var html = '';
-    html = html +     '<div class="btn-toolbar pull-right no-margin">';
-    html = html +       '<div class="btn-group">';
-    html = html +         '<a class="btn btn-mini" href="#">Add new task</a>';
-    html = html +         '<a class="btn btn-mini" href="#" onclick="return false;" rel="tooltip" title="Hide project">Collapse</a>';
-    html = html +         '<a class="btn btn-mini" href="#" onclick="return false;" rel="tooltip" title="Hide project">Hide</a>';
-    html = html +       '</div>';
-    html = html +     '</div>';
-
-    var taskGroupControlsNode = $(html);
-    taskGroupNode.append(taskGroupControlsNode);
-
-    taskGroupNode.append('<br class="clearfix"/>');
-
-    var taskTreeNode = $('<div class="wells well-small">Task Tree ...</div>');
-    taskGroupNode.append(taskTreeNode);
-
-    // Use COLLAPSE for task body and edit
-    // http://twitter.github.io/bootstrap/javascript.html#collapse
-
-
-    // Try MEDIA for nested tasks
-    // http://twitter.github.io/bootstrap/components.html#media
-
-    html = '';
-
-    html = html + '<ul class="nav nav-pills nav-stacked">';
-    html = html +   '<li class="active">';
-    html = html +     '<a href="#" ><i class="icon-chevron-down"></i> <input type="checkbox"> Task 3</a>';
-    html = html +   '</li>';
-    html = html +   '<li>';
-    html = html +     '<a href="#" style="margin-left:20px;"><i class="icon-chevron-down"></i> <i class="icon-check"></i> Task 23</a>';
-    html = html +   '</li>';
-    html = html +   '<li class="active">';
-    html = html +     '<a href="#" style="margin-left:40px;"><i class="icon-chevron-right"></i> Task 3';
-
-    html = html +     '</a>';
-
-    html = html +   '</li>';
-
-    html = html +   '<li class="active">';
-    html = html +       '<a href="#" style="margin-left:40px;">' +
-                            '<i class="icon-chevron-right"></i> Task xxx' +
-
-                        '</a>' +
-
-                    '</li>';
-
-
-    html = html + '</ul>';
-
-    // ACCORDEON
-    //  Full task list - accordeon
-    //  Each task - accordeon group
-    //  Accordeon body - task-edit interface
-    //  Exapnding subtasks - custom button with event
-    // 
-
-
-    html = html +   '<div class="accordion" id="accordion2">' +
-                        '<div class="accordion-group">' +
-                            '<div class="accordion-heading clearfix" title="Select task">' +
-                                '<a class="accordion-toggle pull-left" data-toggle="collapse" ' +
-                                    ' data-parent="#accordion2" href="#task2"  style="display:inline;">' +
-                                    '<i class="icon-chevron-down"></i>' +
-                                '</a>' +
-
-                                '<span class="pull-left" title="Edit task"' +
-                                    ' style="display:inline;">' +
-                                    'Collapsible Group Item #1' +
-                                '</span>' +                                
-
-                                '<div class="btn-toolbar pull-right" >' +
-                                    '<div class="btn-group">' +
-                                        '<a class="btn btn-mini" href="#" data-toggle="button"><i class="icon-check"></i></a>' +
-                                        '<a class="btn btn-mini" href="#">Add subtask</a>' +
-                                    '</div>' +
-                                '</div>' +
-
-
-                            '</div>' +
-                            '<div id="collapseOne" class="accordion-body collapse">' +
-                                '<div class="accordion-inner">' +
-                                    'DDDDDDDDDD' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-
-
-                        '<div class="accordion-group" id="task2" style="margin-left:20px;">' +
-                            '<div class="accordion-heading">' +
-                                '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">' +
-                                    'Collapsible Group Item #2' +
-                                '</a>' +
-                            '</div>' +
-                            '<div id="collapse2" class="accordion-body collapse">' +
-                                '<div class="accordion-inner">' +
-                                    'Anim pariatur cliche...' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                
-
-
-                    '</div>';
+    var taskListNode = createTaskListNode(project.taskTree.children, true);
+    taskGroupNode.append(taskListNode);
 
 
 
-    taskTreeNode.append(html);
+}
+
+function createTaskListNode(taskSet, root) {
+
+
+    var ulNode = $('<ul class="nav nav-pills nav-stacked" style="margin-bottom: 10px;">');
+
+    if (!root) ulNode.addClass('indent');
+
+    for (taskId in taskSet) {
+        var task = taskSet[taskId];
+        var liNode = createTaskNode(task);
+        ulNode.append(liNode);
+    }
+
+    return ulNode;
+
+}
 
 
 
-    taskGroupNode.append('<br class="clearfix"/>');
-    taskGroupNode.append('<br class="clearfix"/>');
+function createTaskNode(task) {
 
-    // self.updateProjectSelection(project);
-    // a.bind('click', 
-    //         function() {
-    //           // alert('CLICK...');
-    //           handler(project);
-    //         });
-  }
+    //   <li class="hide active" style="display: list-item;">
+    //     <a href="#" onclick="return false">
+    //       <input type="checkbox"/>
+    //       <span>5 test</span>
+    //       <i class="icon-chevron-right pull-right"></i>
+    //       <span class="badge badge-warning pull-right">Tomorrow</span>
+    //     </a>
+    //   </li>
+
+    var liNode = $('<li class="" id="task_' + task.id + '"></li>');
+
+    var aNode = $('<a href="#" onclick="return false"></a>');
+    liNode.append(aNode);
+    aNode.click( 
+                function() {
+                liNode.toggleClass('active');
+            });
+    
+    var checkboxNode = $(   '<label class="checkbox" ' +
+                                'style="display: inline; padding-left: 10px; min-height: 14px; line-height: 18px;">' + 
+                                '<input type="checkbox" style="margin-left:0px; margin-top:2px;">' + 
+                            '</label>');
+    aNode.append(checkboxNode);
+    checkboxNode.click( 
+                function(e) {
+                e.stopPropagation();
+                console.log('Checked');
+            });
+
+    var taskNameNode = $('<span onclick="return false">' + task.title + '</span>');
+    aNode.append(taskNameNode);
+    taskNameNode.click( 
+                function(e) {
+                e.stopPropagation();
+                console.log('Task Edit');
+            });
+
+    var subtasksNodeId = 'sub_' + task.id;
+    var chevronNode = $('<a href="#" data-toggle="collapse" data-target="#' + subtasksNodeId + '">' +
+                            '<i class="icon-chevron-right pull-right" ></i></a>');
+    aNode.append(chevronNode);
+
+
+    aNode.append('<span class="badge badge-warning pull-right">Tomorrow</span>');
+
+    if (task.hasSubtasks) {
+        var subtasksNode = createTaskListNode(task.children);
+        subtasksNode.attr('id', subtasksNodeId);
+        subtasksNode.addClass('collapse');
+        subtasksNode.addClass('in');
+        liNode.append(subtasksNode);
+    }
+
+
+
+    return liNode;
+
+}
+
 
 
 

@@ -64,6 +64,8 @@ function DataView(settings, eventHandler, pageController) {
 	          });
     li.append(a);
 		li.fadeIn();
+
+    self.createTaskTree(project);
   }
   // -------------------------------------------------------------------------
 

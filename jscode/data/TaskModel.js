@@ -40,12 +40,14 @@ function Task(json) {
   this.subTasks = new Array;
   this.isExpanded = true;
   this.isInTree = false;
+  this.hasSubtasks = false;
+
 
 
   this.getSubtasksNumber = function() {
     var size = 0, key;
-    for (key in subTasks) {
-        if (subTasks.hasOwnProperty(key)) size++;
+    for (key in self.subTasks) {
+        if (self.subTasks.hasOwnProperty(key)) size++;
     }
     return size;
   }

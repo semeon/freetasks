@@ -49,21 +49,28 @@ function Project(json) {
     // -----------------------------------------------------------------------
     // Private members
     // -----------------------------------------------------------------------
-    
+
         function attachChildrenToParent(node, fullList) {
-            node.children = {};
+            var children = {};
+            var childrenAttached = false;
+
             for (itemId in fullList) {
+                childrenAttached = true;
                 var item = fullList[itemId];
 
                 if (item.parentId == node.id) {
                     // console.log( '  "' + item.title + '" attached to "' + node.title + '"');
-                    node.children[itemId] = item;
+                    children[itemId] = item;
                     attachChildrenToParent(item, fullList);
                 }
             }
-        } // ---------------------------------------------------------------------
 
+            if (childrenAttached) {
+                node.children = children;
+                node.hasSubtasks = true;
+            }
 
+        } // 
 
     // Sorting
     function sortItemsByTitle(a,b) {  

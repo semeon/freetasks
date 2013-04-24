@@ -55,13 +55,13 @@ function Project(json) {
             var childrenAttached = false;
 
             for (itemId in fullList) {
-                childrenAttached = true;
                 var item = fullList[itemId];
 
                 if (item.parentId == node.id) {
                     // console.log( '  "' + item.title + '" attached to "' + node.title + '"');
                     children[itemId] = item;
                     attachChildrenToParent(item, fullList);
+                    childrenAttached = true;
                 }
             }
 

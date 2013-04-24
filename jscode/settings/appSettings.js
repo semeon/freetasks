@@ -28,7 +28,12 @@ function AppSettings() {
     self.auth.clientId = '345458471597.apps.googleusercontent.com';
 
     // redirect_uri (required)
-    // The URL on your site that will handle OAuth responses after the user takes an action on the dialog. You'll need to register the redirect_uri you'd like to use in advance. See the Registering your app with Google section for details on how to register.
+    // The URL on your site that will handle OAuth responses after the user takes an action on the dialog. 
+    // You'll need to register the redirect_uri you'd like to use in advance. 
+    // See the Registering your app with Google section for details on how to register.
+    //
+    //                https://code.google.com/apis/console
+    //
     
     // var streetaddress= addy.substr(0, addy.indexOf(','));
     var location = window.location.href;
@@ -38,7 +43,9 @@ function AppSettings() {
     self.auth.redirectUri = location;
 
     // scope (required)
-    // URL identifying the Google service to be accessed. See the documentation for the API you'd like to use for what scope to specify. To specify more than one scope, list each one separated with a space.
+    // URL identifying the Google service to be accessed. 
+    // See the documentation for the API you'd like to use for what scope to specify. 
+    // To specify more than one scope, list each one separated with a space.
     self.auth.scope = 'https://www.googleapis.com/auth/tasks';
 
     // response_type (required) 
@@ -46,7 +53,8 @@ function AppSettings() {
     self.auth.responseType = 'token';
 
     // state (optional) 
-    // A string used to maintain state between the request and redirect. This value will be appended to your redirect_uri after the user takes an action on the OAuth dialog.
+    // A string used to maintain state between the request and redirect. 
+    // This value will be appended to your redirect_uri after the user takes an action on the OAuth dialog.
     self.auth.state = '';
 
     self.auth.accessToken = false;

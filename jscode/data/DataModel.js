@@ -1,3 +1,4 @@
+// DEPRECATED 
 function DataModel() {
 
     var self = this;
@@ -52,6 +53,7 @@ function DataModel() {
         this.subTasks = new Array;
         this.isExpanded = true;
         this.isInTree = false;
+        this.hasSubtasks = false;
     }
 
 

@@ -2,7 +2,7 @@ function TaskTreeView(project, rootNode) {
 
   var self = this;
 
-  var shortTaskNameLength = 60;
+  var shortTaskNameLength = 65;
 
   var taskTreeItemIdPrefix = 'taskListItem_';
   var taskGroupNode = $('<div class="" style="margin-left: 20px; margin-bottom: 40px;"></div>'); 
@@ -40,14 +40,15 @@ function constructor() {
 
     rootNode.append(taskGroupNode);
 
-    var taskListHeaderNode = $('<h4 class="">' + project.title + '</h4>');
+    var taskListHeaderNode = $('<h4 class="all-caps">' + project.title + '</h4>');
     taskGroupNode.append(taskListHeaderNode);
 
-    var taskListNode = createTaskListNode(project.taskTree.children, true);
+    var taskListNode = createTaskListNode(project.taskTree.children, true, 0);
     taskGroupNode.append(taskListNode);
 }
 
 function createTaskListNode(taskSet, root) {
+
 
     var ulNode = $('<ul class="nav nav-list bs-docs-sidenav task-tree">');
 
@@ -58,6 +59,7 @@ function createTaskListNode(taskSet, root) {
         var liNode = createTaskNode(task);
         ulNode.append(liNode);
     }
+
 
     return ulNode;
 }
@@ -94,9 +96,10 @@ function createTaskNode(task) {
     aNode.append(checkboxNode);
 
 
+    var length = shortTaskNameLength - task.level*3;
     var taskShortName = task.title;
-    if (taskShortName.length > shortTaskNameLength) {
-        taskShortName = taskShortName.substring(0, shortTaskNameLength-5);
+    if (taskShortName.length > length) {
+        taskShortName = taskShortName.substring(0, length-5);
         taskShortName = taskShortName + '...'
     }
 

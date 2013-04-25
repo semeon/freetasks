@@ -41,7 +41,7 @@ function Task(json) {
   this.isExpanded = true;
   this.isInTree = false;
   this.hasSubtasks = false;
-
+  this.level = 0;
 
 
   this.getSubtasksNumber = function() {

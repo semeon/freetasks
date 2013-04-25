@@ -42,7 +42,7 @@ function Project(json) {
             self.taskTree.id = 'none';
             self.taskTree.title = 'root';
             console.log('  Building task tree.');
-            attachChildrenToParent(self.taskTree, self.taskSet);
+            attachChildrenToParent(self.taskTree, self.taskSet, 0);
         }
 
 
@@ -50,7 +50,7 @@ function Project(json) {
     // Private members
     // -----------------------------------------------------------------------
 
-        function attachChildrenToParent(node, fullList) {
+        function attachChildrenToParent(node, fullList, level) {
             var children = {};
             var childrenAttached = false;
 
@@ -60,7 +60,8 @@ function Project(json) {
                 if (item.parentId == node.id) {
                     // console.log( '  "' + item.title + '" attached to "' + node.title + '"');
                     children[itemId] = item;
-                    attachChildrenToParent(item, fullList);
+                    item.level = level;
+                    attachChildrenToParent(item, fullList, level+1);
                     childrenAttached = true;
                 }
             }

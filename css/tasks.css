@@ -7,16 +7,16 @@ hr {
 }
 
 .indent {
-    margin-left: 20px!important;
+    margin-left: 25px!important;
 }
 
 .bs-docs-sidenav.indent > li:first-child > a {
     /*border-top: 0px!important;*/
 }
 
-.border-bottoms {
+.border-bottom {
 	border-bottom: 1px solid #ddd;
-	margin-bottom: +20px;
+	margin-bottom: 20px;
 }
 
 
@@ -26,10 +26,11 @@ hr {
 .bs-docs-sidenav {
   margin-left: 0;
   margin-right: 0;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   padding: 0;
   /*padding-bottom: 5px;*/
   background-color: #fff;
+  overflow: visible
 }
 
 .bs-docs-sidenav > li > a {

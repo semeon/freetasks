@@ -1,10 +1,14 @@
 function TaskTreeView(project, rootNode, idPrefix) {
 
   var self = this;
-
   var shortTaskNameLength = 65;
+  var taskGroupNode = $(    '<div id="' + 
+                            idPrefix + 
+                            project.id + 
+                            '" class="hide wellz well-small" style="margin-left: 20px; margin-bottom: 30px;"></div>'); 
 
-  var taskGroupNode = $('<div id="' + idPrefix + project.id + '" class="hide" style="margin-left: 20px; margin-bottom: 40px;"></div>'); 
+  var taskTreeRootNodeId = 'taskTreeRootNode_' + project.id;
+
 
   constructor();
 
@@ -12,40 +16,39 @@ function TaskTreeView(project, rootNode, idPrefix) {
 // PRIVATE
 // -----------------------------------------------------------------
 
-    // <ul id="" class="nav nav-pills nav-stacked">
-
-    //   <li class="nav-header">Project #1</li>
-
-    //   <li class="hide active" style="display: list-item;">
-    //     <a href="#" onclick="return false">
-    //       <input type="checkbox"/>
-    //       <span>5 test</span>
-    //       <i class="icon-chevron-right pull-right"></i>
-    //       <span class="badge badge-warning pull-right">Tomorrow</span>
-    //     </a>
-    //   </li>
-
-    //   <li class="hide active" style="display: list-item;">
-    //     <a href="#" onclick="return false">1 test project <i class="icon-chevron-right pull-right"></i></a></li>
-
-    //   <li class="hide" style="display: list-item;">
-    //     <a href="#" onclick="return false">4 test <i class="icon-chevron-right pull-right"></i></a></li>
-
-    //   <li class="hide" style="display: list-item;">
-    //     <a href="#" onclick="return false">a test project <i class="icon-chevron-right pull-right"></i></a></li>
-    // </ul>
-
 function constructor() {
 
 
     rootNode.append(taskGroupNode);
     taskGroupNode.fadeOut(0);
 
-    var taskListHeaderNode = $('<h4 class="all-caps">' + project.title + '</h4>');
-    taskGroupNode.append(taskListHeaderNode);
+    var taskListHeaderDivNode = $('<div class="" style="display: block;"></div>');
+    taskGroupNode.append(taskListHeaderDivNode);
 
-    var taskListNode = createTaskListNode(project.taskTree.children, true, 0);
-    taskGroupNode.append(taskListNode);
+        var taskListHeaderNode = $('<h4 class="all-caps pull-left">' + project.title + '</h4>');
+        taskListHeaderDivNode.append(taskListHeaderNode);
+
+        var taskListBtnBar = $('<div class="btn-toolbar pull-right"></div>');
+        taskListHeaderDivNode.append(taskListBtnBar);
+
+            var taskListBtnGrp = $('<div class="btn-group"></div>');
+            taskListBtnBar.append(taskListBtnGrp);
+
+            var taskListBtnCollapse = $('<a type="button" class="btn btn-mini" data-toggle="button">Collapse</a>');
+            taskListBtnGrp.append(taskListBtnCollapse);
+
+            taskListBtnCollapse.click( 
+                                function(e) {
+                                $('#' + taskTreeRootNodeId).fadeToggle();
+                            });
+
+    taskGroupNode.append('<br class="clear-fix"/>');
+    taskGroupNode.append('<br class="clear-fix"/>');
+    taskGroupNode.append('<br class="clear-fix"/>');
+    taskGroupNode.append('<hr class="clear-fix" style="margin-top: -15px;"/>');
+
+    // var taskListNode = createTaskListNode(project.taskTree.children, true, 0);
+    // taskGroupNode.append(taskListNode);
 }
 
 function createTaskListNode(taskSet, root) {
@@ -68,15 +71,6 @@ function createTaskListNode(taskSet, root) {
 
 
 function createTaskNode(task) {
-
-    //   <li class="hide active" style="display: list-item;">
-    //     <a href="#" onclick="return false">
-    //       <input type="checkbox"/>
-    //       <span>5 test</span>
-    //       <i class="icon-chevron-right pull-right"></i>
-    //       <span class="badge badge-warning pull-right">Tomorrow</span>
-    //     </a>
-    //   </li>
 
     var liNode = $('<li class="" id="task_' + task.id + '"></li>');
 
@@ -226,21 +220,28 @@ function createTaskNode(task) {
 // PUBLIC
 // -----------------------------------------------------------------
 
-  this.show = function() {
-    taskGroupNode.fadeIn();
-  }
+    this.update = function(update) {
+        var taskListNode = createTaskListNode(project.taskTree.children, true, 0);
+        taskListNode.attr('id', taskTreeRootNodeId);
+        taskGroupNode.append(taskListNode);        
+    }
 
-  this.hide = function() {
-    taskGroupNode.fadeOut();
-  }
 
-  this.expand = function() {
+    this.show = function() {
+        taskGroupNode.fadeIn();
+    }
 
-  }
+    this.hide = function() {
+        taskGroupNode.fadeOut();
+    }
 
-  this.collapse = function() {
-    
-  }
+    this.expand = function() {
+
+    }
+
+    this.collapse = function() {
+
+    }
 
 
 }

@@ -21,13 +21,14 @@ function DataController(settings, pageController) {
     self.eventHandler.projectListLoaded = function() {
         console.log('Project List loaded event called.');
         dataView.createProjectList(self.dataModel.projectList, projectListItemClick);
+        dataView.createTaskTreesList(self.dataModel.projectList);
 
     }
 
     self.eventHandler.taskListLoaded = function(project) {
         console.log('Project loaded event called.');
         dataView.updateProjectListItem(project, projectListItemClick);
-        dataView.createTaskTree(project);
+        dataView.fillTaskTree(project);
     }
 
     function projectListItemClick (project) {

@@ -18,26 +18,40 @@ function DataView(settings, eventHandler, pageController) {
 // TASK TREE PANE
 // -------------------------------------------------------------------------
 
-  // -------------------------------------------------------------------------
-  this.createTaskTree = function(project) {
+    // -------------------------------------------------------------------------
+    this.fillTaskTree = function(project) {
     console.log('Starting displayTaskTree for ' + project.id);
 
-  	if(!taskListDisplayed) self.displayTaskListPane();
+        var taskTree = taskGroups[project.id];
+        taskTree.update(project);
 
-  	var rootNode = $('#taskPaneRoot');
-    var taskGroup = new TaskTreeView(project, rootNode, taskTreeNodeIdPrefix); 
-    taskGroups[project.id] = taskGroup;
+    }
+    // -------------------------------------------------------------------------
 
-  }
-  // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    this.createTaskTreesList = function(projects) {
+        console.log('Starting createTaskTreesList');
 
-  // -------------------------------------------------------------------------
-  this.displayTaskListPane = function() {
+        if(!taskListDisplayed) self.displayTaskListPane();
+        var rootNode = $('#taskPaneRoot');
+
+        for (p in projects) {
+            var project = projects[p];
+            var taskGroup = new TaskTreeView(project, rootNode, taskTreeNodeIdPrefix); 
+            taskGroups[project.id] = taskGroup;
+        }
+    }
+    // -------------------------------------------------------------------------
+
+
+
+    // -------------------------------------------------------------------------
+    this.displayTaskListPane = function() {
     console.log('! Starting displayTaskListPane');
-  	$('#taskListPane').fadeIn();
- 		taskListDisplayed = true;
-  }
-  // -------------------------------------------------------------------------
+    	$('#taskListPane').fadeIn();
+    		taskListDisplayed = true;
+    }
+    // -------------------------------------------------------------------------
 
 
 
@@ -57,7 +71,6 @@ function DataView(settings, eventHandler, pageController) {
             var liNode = createItemNode (project, handler); 
             root.append(liNode);
             self.updateProjectSelection(project);
-
         }
 
         function createItemNode (proj, hand) {

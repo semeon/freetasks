@@ -16,6 +16,9 @@ function Project(json) {
         this.title = json.title;
         this.selfLink = json.selfLink;
 
+        this.tasks = [];
+
+
         this.taskSet = {};
         this.taskTree = {};        
 
@@ -29,6 +32,8 @@ function Project(json) {
     // -----------------------------------------------------------------------
 
         this.addTasks = function(tasks) {
+
+            self.tasks = tasks;
 
             for (var i = 0; i < tasks.length; i++) {
                 var task = new Task(tasks[i]);

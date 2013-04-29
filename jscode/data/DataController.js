@@ -26,7 +26,7 @@ function DataController(settings, pageController) {
 
     self.eventHandler.taskListLoaded = function(project) {
         console.log('Project loaded event called.');
-        dataView.displayProjectListItem(project);
+        dataView.updateProjectListItem(project, projectListItemClick);
         dataView.createTaskTree(project);
     }
 

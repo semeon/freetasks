@@ -63,16 +63,6 @@ function DataView(settings, eventHandler, pageController) {
         function createItemNode (proj, hand) {
             var li = $('<li class="hide"></li>'); 
             li.attr('id', listItemIdPrefix + proj.id);
-
-            var a = $('<a href="#" onclick="return false">' + proj.title + ' <i class="icon-chevron-right pull-right"></i></a>'); 
-            li.append(a);
-
-            a.bind('click', 
-                            function() {
-                                // alert('CLICK...');
-                                hand(proj);
-                            });
-
             return li;
         }
 
@@ -81,39 +71,51 @@ function DataView(settings, eventHandler, pageController) {
 
 
     // -------------------------------------------------------------------------
-    this.displayProjectListItem = function(project) {
+    this.updateProjectListItem = function(project, handler) {
         console.log('Starting displayProjectListItem for ' + project.id);
         var li = $('#' + listItemIdPrefix + project.id);
+        var taskNumber = project.tasks.length;
+
+        var a = $('<a href="#" onclick="return false">' + project.title + ' (' + taskNumber + ') <i class="icon-chevron-right pull-right"></i></a>'); 
+
+        li.append(a);
+        a.bind('click', 
+                        function() {
+                            // alert('CLICK...');
+                            handler(project);
+                        });
+
+
         li.fadeIn();
     }
     // -------------------------------------------------------------------------
 
 
-  // -------------------------------------------------------------------------
-  this.updateProjectSelection = function(project) {
-    var projectListItemSelector ='#' + listItemIdPrefix + project.id;
-    var taskTreeNodeSelector ='#' + taskTreeNodeIdPrefix + project.id;
+    // -------------------------------------------------------------------------
+    this.updateProjectSelection = function(project) {
+        var projectListItemSelector ='#' + listItemIdPrefix + project.id;
+        var taskTreeNodeSelector ='#' + taskTreeNodeIdPrefix + project.id;
 
-    if (project.isSelected) {
-      $(projectListItemSelector).addClass('active');
-      $(taskTreeNodeSelector).fadeIn();
+        if (project.isSelected) {
+          $(projectListItemSelector).addClass('active');
+          $(taskTreeNodeSelector).fadeIn();
 
-    } else {
-      $(projectListItemSelector).removeClass('active');
-      $(taskTreeNodeSelector).fadeOut();
+        } else {
+          $(projectListItemSelector).removeClass('active');
+          $(taskTreeNodeSelector).fadeOut();
 
+        }
     }
-  }
-  // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
 
-  // -------------------------------------------------------------------------
-  this.displayProjectListPane = function() {
+    // -------------------------------------------------------------------------
+    this.displayProjectListPane = function() {
     console.log('! Starting displayProjectListPane');
-  	$('#projectListPane').fadeIn();
- 		projectListDisplayed = true;
-  }
-  // -------------------------------------------------------------------------
+        $('#projectListPane').fadeIn();
+    	projectListDisplayed = true;
+    }
+    // -------------------------------------------------------------------------
 
 
 }

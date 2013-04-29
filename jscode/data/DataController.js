@@ -18,11 +18,16 @@ function DataController(settings, pageController) {
 // Event Handler
 // *********************************************************************
 
+    self.eventHandler.projectListLoaded = function() {
+        console.log('Project List loaded event called.');
+        dataView.createProjectList(self.dataModel.projectList, projectListItemClick);
+
+    }
+
     self.eventHandler.taskListLoaded = function(project) {
         console.log('Project loaded event called.');
-        dataView.displayProjectListItem(project, projectListItemClick);
-        // dataView.createTaskTree(project);
-
+        dataView.displayProjectListItem(project);
+        dataView.createTaskTree(project);
     }
 
     function projectListItemClick (project) {
@@ -44,45 +49,47 @@ function DataController(settings, pageController) {
   }
 
 
-  // Project Data Loading
-  // -----------------------------------------------------------------------
-  this.loadProjects = function() {
+    // Project Data Loading
+    // -----------------------------------------------------------------------
+    this.loadProjects = function() {
 
-    console.log('Starting projects load.');
+        console.log('Starting projects load.');
 
-    // Request Data
-    apiController.requestProjects(processProjectList);
+        // Request Data
+        apiController.requestProjects(processProjectList);
 
-    // Process Response
-    function processProjectList(data) {
-      console.log('Processing loaded projects');
+        // Process Response
+        function processProjectList(data) {
+            console.log('Processing loaded projects');
+            if (data.items) {
+                function sortItemsByTitle(a,b) {  
+                    return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;  
+                };
+                // Sorting??
+                var items = cats = $(data.items).sort(sortItemsByTitle); 
 
-      // taskPaneView.clearTaskPane();
+                for (var i = 0; i < items.length; i++) {
+                    // PROJECT CREATED HERE
+                    var project = new Project(items[i]);
+                    console.log('  Creating new project: ' + project.title);
+                    self.dataModel.projectList[project.id] = project;
+                    self.loadTasks(project);
+                }
+                self.eventHandler.projectListLoaded();
 
-      // Sorting??
-      //var sortedData = cats = $(data).sort(sortItemsByTitle); 
-      if (data.items) {
-        for (var i = 0; i < data.items.length; i++) {
+            } else if (data.error) {
+                dataLoadErrorOccured = true;
+                pageController.processDataLoadError(data.error);
 
-          // PROJECT CREATED HERE
-          var project = new Project(data.items[i]);
-          console.log('  Creating new project: ' + project.title);
+            } else {
+                dataLoadErrorOccured = true;
+                pageController.processDataLoadError();
 
-          self.dataModel.projectList[project.id] = project;
-          self.loadTasks(project);
+            }
         }
 
-      } else if (data.error) {
-        dataLoadErrorOccured = true;
-        pageController.processDataLoadError(data.error);
 
-      } else {
-        dataLoadErrorOccured = true;
-        pageController.processDataLoadError();
-
-      }
-    }
-  } // ---------------------------------------------------------------------
+    } // ---------------------------------------------------------------------
 
 
 
@@ -114,24 +121,6 @@ function DataController(settings, pageController) {
     }
   } // ---------------------------------------------------------------------
 
-
-
-// *********************************************************************
-// Private
-// *********************************************************************
-
-  // AppData Controls
-  // ... 
-
-  // // Controlling views
-  // displayProjectList = function () {
-  //   // alert('displayProjectList');
-  //   projectListView.clearProjectList();
-  //   for (var i = 0; i < projectCollection.length; i++) {
-  //     var project = projectCollection[i];
-  //     projectListView.displayProject(project, projectListItemClick);
-  //   }
-  // }
 
 
 }

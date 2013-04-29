@@ -1,12 +1,17 @@
 function DataView(settings, eventHandler, pageController) {
 
-  var self = this;
+    var self = this;
 
-  var projectListDisplayed = false;
-  var taskListDisplayed = false;
-	var listItemIdPrefix = 'projectLisItem_';
+    var projectListDisplayed = false;
+    var taskListDisplayed = false;
 
-  var taskGroups = {};
+    var projectListRootNodeId = 'projectListRoot';
+
+    var listItemIdPrefix = 'projectListItem_';
+    var taskTreeNodeIdPrefix = 'projectTaskTreeNode_';
+
+
+    var taskGroups = {};
 
 
 // -------------------------------------------------------------------------
@@ -20,11 +25,8 @@ function DataView(settings, eventHandler, pageController) {
   	if(!taskListDisplayed) self.displayTaskListPane();
 
   	var rootNode = $('#taskPaneRoot');
-    var taskGroup = new TaskTreeView(project, rootNode); 
+    var taskGroup = new TaskTreeView(project, rootNode, taskTreeNodeIdPrefix); 
     taskGroups[project.id] = taskGroup;
-
-    taskGroup.show();
-
 
   }
   // -------------------------------------------------------------------------
@@ -43,43 +45,64 @@ function DataView(settings, eventHandler, pageController) {
 // PROJECT LIST PANE
 // -------------------------------------------------------------------------
 
-  // -------------------------------------------------------------------------
-  this.displayProjectListItem = function(project, handler) {
-    console.log('Starting displayProjectListItem for ' + project.id);
+    // -------------------------------------------------------------------------
+    this.createProjectList = function(projects, handler) {
+        console.log('Starting createProjectList');
 
-  	if(!projectListDisplayed) self.displayProjectListPane();
+        if(!projectListDisplayed) self.displayProjectListPane();
 
-  	var root = $('#projectListRoot');
-    var li = $('<li class="hide"></li>'); 
-    var liId = listItemIdPrefix + project.id;
-    var a = $('<a href="#" onclick="return false">' + project.title + ' <i class="icon-chevron-right pull-right"></i></a>'); 
+        for (p in projects) {
+            var project = projects[p];
+            var root = $('#' + projectListRootNodeId);
+            var liNode = createItemNode (project, handler); 
+            root.append(liNode);
+            self.updateProjectSelection(project);
 
-		root.append(li);
-    li.attr('id', liId);
-    self.updateProjectSelection(project);
-	  a.bind('click', 
-	          function() {
-	            // alert('CLICK...');
-	            handler(project);
-	          });
-    li.append(a);
-		li.fadeIn();
+        }
 
-    self.createTaskTree(project);
-  }
-  // -------------------------------------------------------------------------
+        function createItemNode (proj, hand) {
+            var li = $('<li class="hide"></li>'); 
+            li.attr('id', listItemIdPrefix + proj.id);
+
+            var a = $('<a href="#" onclick="return false">' + proj.title + ' <i class="icon-chevron-right pull-right"></i></a>'); 
+            li.append(a);
+
+            a.bind('click', 
+                            function() {
+                                // alert('CLICK...');
+                                hand(proj);
+                            });
+
+            return li;
+        }
+
+    }
+    // -------------------------------------------------------------------------
+
+
+    // -------------------------------------------------------------------------
+    this.displayProjectListItem = function(project) {
+        console.log('Starting displayProjectListItem for ' + project.id);
+        var li = $('#' + listItemIdPrefix + project.id);
+        li.fadeIn();
+    }
+    // -------------------------------------------------------------------------
 
 
   // -------------------------------------------------------------------------
   this.updateProjectSelection = function(project) {
-    var selector ='#' + listItemIdPrefix + project.id;
-    var li = $(selector);
+    var projectListItemSelector ='#' + listItemIdPrefix + project.id;
+    var taskTreeNodeSelector ='#' + taskTreeNodeIdPrefix + project.id;
 
-    li.removeClass('active');
     if (project.isSelected) {
-      li.addClass('active');
-    }
+      $(projectListItemSelector).addClass('active');
+      $(taskTreeNodeSelector).fadeIn();
 
+    } else {
+      $(projectListItemSelector).removeClass('active');
+      $(taskTreeNodeSelector).fadeOut();
+
+    }
   }
   // -------------------------------------------------------------------------
 

@@ -1,11 +1,10 @@
-function TaskTreeView(project, rootNode) {
+function TaskTreeView(project, rootNode, idPrefix) {
 
   var self = this;
 
   var shortTaskNameLength = 65;
 
-  var taskTreeItemIdPrefix = 'taskListItem_';
-  var taskGroupNode = $('<div class="" style="margin-left: 20px; margin-bottom: 40px;"></div>'); 
+  var taskGroupNode = $('<div id="' + idPrefix + project.id + '" class="hide" style="margin-left: 20px; margin-bottom: 40px;"></div>'); 
 
   constructor();
 
@@ -38,7 +37,9 @@ function TaskTreeView(project, rootNode) {
 
 function constructor() {
 
+
     rootNode.append(taskGroupNode);
+    taskGroupNode.fadeOut(0);
 
     var taskListHeaderNode = $('<h4 class="all-caps">' + project.title + '</h4>');
     taskGroupNode.append(taskListHeaderNode);
@@ -136,11 +137,11 @@ function createTaskNode(task) {
         aNode.click( 
                     function() {
                     liNode.toggleClass('active');
-                    if ( liNode.hasClass('active') ) {
-                        chevronIconNode.addClass('icon-white');
-                    } else {
-                        chevronIconNode.removeClass('icon-white');
-                    }
+                    // if ( liNode.hasClass('active') ) {
+                    //     chevronIconNodeLeft.addClass('icon-white');
+                    // } else {
+                    //     chevronIconNodeLeft.removeClass('icon-white');
+                    // }
                 });
 
 

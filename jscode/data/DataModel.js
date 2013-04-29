@@ -58,10 +58,6 @@ function DataModel() {
 
 
 
-
-
-
-
     this.createProject = function(json) {
         /* JSON source format:
             "kind": "tasks#taskList",

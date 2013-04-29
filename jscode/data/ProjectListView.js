@@ -33,7 +33,7 @@ function ProjectListView() {
     // var a = $('<a>' + project.title + '</a>'); 
     a.bind('click', 
             function() {
-              // alert('CLICK...');
+              alert('CLICK...');
               handler(project);
             });
 

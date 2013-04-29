@@ -116,7 +116,33 @@ function createTaskNode(task) {
     // var chevronIconNode = $('<i class="pull-right"></i>');
     // chevronNode.append(chevronIconNode);
 
-    aNode.append('<span class="badge badge-warning pull-right">Tomorrow</span>');
+    if (task.due != undefined ) {
+        
+        var dueDate = moment(task.due);
+        var dueDateFriendly = moment(task.due).format("MMM Do");
+
+        var dueNode = $('<span class="badge pull-right">' + dueDateFriendly + '</span>');
+
+        var now = moment(Date());
+        var tomorrow = moment(Date()).add('days', 1);
+        var nextWeek = moment(Date()).add('days', 7);
+
+
+        if ( dueDate.isSame(now, 'day') ) {
+            dueNode.addClass('badge-success');
+            
+        } else if ( dueDate.isBefore(now, 'day') ) {
+            dueNode.addClass('badge-important');
+
+        } else if ( dueDate.isBefore(tomorrow, 'day') ) {
+            dueNode.addClass('badge-success');
+      
+        } else if ( dueDate.isBefore(nextWeek, 'day') ) {
+            // dueNode.addClass('badge-success');
+        }
+        aNode.append(dueNode);
+    }
+
 
     var subtasksNode = createTaskListNode(task.children);
 
